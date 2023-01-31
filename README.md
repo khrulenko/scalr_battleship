@@ -9,3 +9,4 @@ Used technologies:
 - JavaScript
 - TypeScript
 - React
+- Material UI

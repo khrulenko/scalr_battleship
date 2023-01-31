@@ -1,3 +1,4 @@
+import { AnyFunction, CellCoords, Field, ShipStart, Vectors } from './types';
 import { getRandomNumberUntil, isCellOnField } from './utils';
 
 const getTopCoordsFrom = ([x, y]: CellCoords) => [x, y - 1];
