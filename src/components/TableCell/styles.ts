@@ -1,5 +1,5 @@
 import { TableCellProps as MUITableCellProps } from '@mui/material';
-import { CellProps, TableCellProps } from '.';
+import { CellProps } from '.';
 import { StyleFunction } from '../../common/types';
 
 const createCellStyles: StyleFunction<MUITableCellProps & CellProps> = ({
