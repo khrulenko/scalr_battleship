@@ -16,6 +16,7 @@ const ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
 
 const App = () => {
   const [field, fieldSet] = useState<Field>(emptyField);
+  const [justRefreshed, justRefreshedSet] = useState<boolean>(false);
 
   const placeShips = () => {
     let newfield = emptyField;
@@ -38,6 +39,7 @@ const App = () => {
     });
 
     fieldSet(newfield);
+    justRefreshedSet(true);
   };
 
   useEffect(() => {
@@ -56,7 +58,12 @@ const App = () => {
             return (
               <tr key={ri}>
                 {row.map((cell, ci) => (
-                  <TableCell key={`${ci}` + `${ri}`} isShipCell={!!cell} />
+                  <TableCell
+                    key={`${ci}` + `${ri}`}
+                    isShipCell={!!cell}
+                    wasFieldRefreshed={justRefreshed}
+                    wasFieldRefreshedSet={justRefreshedSet}
+                  />
                 ))}
               </tr>
             );

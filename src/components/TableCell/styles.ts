@@ -2,9 +2,7 @@ import { TableCellProps as MUITableCellProps } from '@mui/material';
 import { CellProps, TableCellProps } from '.';
 import { StyleFunction } from '../../common/types';
 
-const createCellStyles: StyleFunction<
-  MUITableCellProps & CellProps & TableCellProps
-> = ({
+const createCellStyles: StyleFunction<MUITableCellProps & CellProps> = ({
   theme: {
     spacing,
     breakpoints: { down },
