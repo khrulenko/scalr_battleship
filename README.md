@@ -1,4 +1,4 @@
-# Khrulenko Vitalii code example
+Khrulenko Vitalii's Scalr test task
 
 [LINK TO APP PREVIEW](https://khrulenko.github.io/scalr_battleship/)
 
