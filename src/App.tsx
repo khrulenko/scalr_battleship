@@ -60,6 +60,7 @@ const App = () => {
                 {row.map((cell, ci) => (
                   <TableCell
                     key={`${ci}` + `${ri}`}
+                    coords={[ci, ri]}
                     isShipCell={!!cell}
                     wasFieldRefreshed={justRefreshed}
                     wasFieldRefreshedSet={justRefreshedSet}

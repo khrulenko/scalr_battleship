@@ -33,8 +33,8 @@ const createCellStyles: StyleFunction<MUITableCellProps & CellProps> = ({
     height: spacing(6),
 
     border: '1px solid',
-    borderColor: isShipCell ? 'white' : 'black',
     backgroundColor: isShipCell ? shipCellColor : 'white',
+    boxShadow: isShipCell ? '0px 0px 0px 0.5px white inset' : '',
 
     cursor: isShipCell ? 'pointer' : '',
 
@@ -76,4 +76,50 @@ const createCellStyles: StyleFunction<MUITableCellProps & CellProps> = ({
   };
 };
 
-export { createCellStyles };
+const createHorisontalCoordStyles: StyleFunction = ({
+  theme: {
+    breakpoints: { down },
+  },
+}) => ({
+  position: 'absolute',
+  top: '-50%',
+
+  height: '20px',
+
+  [down('md')]: {
+    top: '-60%',
+  },
+
+  [down('sm')]: {
+    top: '-70%',
+    left: '30%',
+  },
+});
+
+const createVerticalCoordStyles: StyleFunction = ({
+  theme: {
+    spacing,
+    breakpoints: { down },
+  },
+}) => ({
+  position: 'absolute',
+  left: '-50%',
+
+  width: '20px',
+
+  textAlign: 'center',
+
+  [down('md')]: {
+    left: '-60%',
+  },
+
+  [down('sm')]: {
+    left: '-70%',
+  },
+});
+
+export {
+  createCellStyles,
+  createHorisontalCoordStyles,
+  createVerticalCoordStyles,
+};
