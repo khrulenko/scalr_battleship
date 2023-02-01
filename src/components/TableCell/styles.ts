@@ -86,6 +86,8 @@ const createHorisontalCoordStyles: StyleFunction = ({
 
   height: '20px',
 
+  cursor: 'auto',
+
   [down('md')]: {
     top: '-60%',
   },
@@ -98,7 +100,6 @@ const createHorisontalCoordStyles: StyleFunction = ({
 
 const createVerticalCoordStyles: StyleFunction = ({
   theme: {
-    spacing,
     breakpoints: { down },
   },
 }) => ({
@@ -108,6 +109,8 @@ const createVerticalCoordStyles: StyleFunction = ({
   width: '20px',
 
   textAlign: 'center',
+
+  cursor: 'auto',
 
   [down('md')]: {
     left: '-60%',

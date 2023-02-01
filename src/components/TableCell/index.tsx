@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { styled } from '@mui/material';
 import MUITableCell from '@mui/material/TableCell';
 import {
@@ -42,21 +42,27 @@ const TableCell = ({
   const isFirstRow = rowIndex === 0;
   const isFirstCell = cellIndex === 0;
 
+  const toggleWasHit = () => wasHitSet((prevWasHit) => !prevWasHit);
+  const stopEventPropagation = (event: MouseEvent<HTMLElement>) =>
+    event.stopPropagation();
+
   useEffect(() => {
     wasHitSet(false);
     wasFieldRefreshedSet(false);
   }, [wasFieldRefreshed]);
 
   return (
-    <Cell
-      isShipCell={isShipCell}
-      wasHit={wasHit}
-      onClick={() => wasHitSet((prev) => !prev)}
-    >
-      {isFirstRow && <HorisontalCoord>{cellIndex + 1}</HorisontalCoord>}
+    <Cell isShipCell={isShipCell} wasHit={wasHit} onClick={toggleWasHit}>
+      {isFirstRow && (
+        <HorisontalCoord onClick={stopEventPropagation}>
+          {cellIndex + 1}
+        </HorisontalCoord>
+      )}
 
       {isFirstCell && (
-        <VerticalCoord>{getLetterByIndx(rowIndex)}</VerticalCoord>
+        <VerticalCoord onClick={stopEventPropagation}>
+          {getLetterByIndx(rowIndex)}
+        </VerticalCoord>
       )}
     </Cell>
   );
