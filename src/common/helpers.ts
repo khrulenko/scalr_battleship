@@ -1,5 +1,10 @@
 import { AnyFunction, CellCoords, Field, ShipStart, Vectors } from './types';
-import { getRandomNumberUntil, isCellOnField } from './utils';
+import { getRandomNumberUntil } from './utils';
+
+const isCoordOnField = (coord: number): boolean => coord >= 0 && coord <= 9;
+
+const isCellOnField = ([cellXCoord, cellYCoord]: CellCoords): boolean =>
+  isCoordOnField(cellXCoord) && isCoordOnField(cellYCoord);
 
 const getTopCoordsFrom = ([x, y]: CellCoords) => [x, y - 1];
 const getBottomCoordsFrom = ([x, y]: CellCoords) => [x, y + 1];
@@ -178,6 +183,7 @@ const placeShip = (
 };
 
 export {
+  isCellOnField,
   getValueByCoords,
   isCellValid,
   getRandomShipStart,

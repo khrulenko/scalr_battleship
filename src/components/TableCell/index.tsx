@@ -4,16 +4,21 @@ import MUITableCell from '@mui/material/TableCell';
 import { createCellStyles } from './styles';
 import { AnyFunction } from '../../common/types';
 
-export interface TableCellProps {
+interface CommonProps {
   isShipCell: boolean;
+}
+
+interface TableCell {
   wasFieldRefreshed: boolean;
   wasFieldRefreshedSet: AnyFunction;
 }
 
-export interface CellProps {
-  isShipCell: boolean;
+interface Cell {
   wasHit: boolean;
 }
+
+export type TableCellProps = TableCell & CommonProps;
+export type CellProps = Cell & CommonProps;
 
 const Cell = styled(MUITableCell)(createCellStyles);
 
