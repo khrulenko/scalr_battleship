@@ -1,6 +1,9 @@
 import { AnyFunction, CellCoords, Field, ShipStart, Vectors } from './types';
 import { getRandomNumberUntil } from './utils';
 
+const areCoordsEqual = (firstCoords: CellCoords, secondCoorlds: CellCoords) =>
+  firstCoords[0] === secondCoorlds[0] && firstCoords[1] === secondCoorlds[1];
+
 const isCoordOnField = (coord: number): boolean => coord >= 0 && coord <= 9;
 
 const isCellOnField = ([cellXCoord, cellYCoord]: CellCoords): boolean =>
@@ -49,8 +52,8 @@ const getRandomShipStart = (): ShipStart => {
   const vectorIndex = Math.floor(Math.random() * 3);
 
   return [
-    getRandomNumberUntil(9),
-    getRandomNumberUntil(9),
+    getRandomNumberUntil(10),
+    getRandomNumberUntil(10),
     vectors[vectorIndex],
   ];
 };
@@ -183,6 +186,7 @@ const placeShip = (
 };
 
 export {
+  areCoordsEqual,
   isCellOnField,
   getValueByCoords,
   isCellValid,

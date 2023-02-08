@@ -1,12 +1,13 @@
 import { Button, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import {
+  areCoordsEqual,
   checkPlacement,
   getRandomShipStart,
   placeShip,
 } from './common/helpers';
 import MainLayout from './components/MainLayout';
-import { Field } from './common/types';
+import { Field, CellCoords } from './common/types';
 import { getEmptyField } from './common/utils';
 import Table from './components/Table';
 import TableCell from './components/TableCell';
@@ -16,9 +17,11 @@ const ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
 
 const App = () => {
   const [field, fieldSet] = useState<Field>(emptyField);
-  const [justRefreshed, justRefreshedSet] = useState<boolean>(false);
+  const [hitCells, hitCellsSet] = useState<CellCoords[]>([]);
 
   const placeShips = () => {
+    hitCellsSet([]);
+
     let newfield = emptyField;
 
     ships.forEach((ship) => {
@@ -39,8 +42,20 @@ const App = () => {
     });
 
     fieldSet(newfield);
-    justRefreshedSet(true);
   };
+
+  const addHitCell = (coords: CellCoords) =>
+    hitCellsSet((currentHitCells) => {
+      const newHitCells = [...currentHitCells];
+      newHitCells.push(coords);
+
+      return newHitCells;
+    });
+
+  const deleteHitCell = (coords: CellCoords) =>
+    hitCellsSet((currentHitCells) =>
+      currentHitCells.filter((hitCell) => !areCoordsEqual(hitCell, coords))
+    );
 
   useEffect(() => {
     placeShips();
@@ -54,21 +69,26 @@ const App = () => {
 
       <Paper>
         <Table>
-          {field.map((row, ri) => {
-            return (
-              <tr key={ri}>
-                {row.map((cell, ci) => (
+          {field.map((row, ri) => (
+            <tr key={ri}>
+              {row.map((cell, ci) => {
+                const wasHit = hitCells.some((coords) =>
+                  areCoordsEqual(coords, [ci, ri])
+                );
+
+                return (
                   <TableCell
                     key={`${ci}` + `${ri}`}
                     coords={[ci, ri]}
+                    wasHit={wasHit}
                     isShipCell={!!cell}
-                    wasFieldRefreshed={justRefreshed}
-                    wasFieldRefreshedSet={justRefreshedSet}
+                    addHitCell={addHitCell}
+                    deleteHitCell={deleteHitCell}
                   />
-                ))}
-              </tr>
-            );
-          })}
+                );
+              })}
+            </tr>
+          ))}
         </Table>
       </Paper>
 

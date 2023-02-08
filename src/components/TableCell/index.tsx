@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent } from 'react';
 import { styled } from '@mui/material';
 import MUITableCell from '@mui/material/TableCell';
 import {
@@ -11,17 +11,17 @@ import { getLetterByIndx } from '../../common/utils';
 
 interface CommonProps {
   isShipCell: boolean;
+  wasHit: boolean;
 }
 
 interface TableCell {
   coords: CellCoords;
-  wasFieldRefreshed: boolean;
-  wasFieldRefreshedSet: AnyFunction;
+  addHitCell: AnyFunction;
+  deleteHitCell: AnyFunction;
 }
 
-interface Cell {
-  wasHit: boolean;
-}
+//TODO: think whether this interface is needed
+interface Cell {}
 
 export type TableCellProps = TableCell & CommonProps;
 export type CellProps = Cell & CommonProps;
@@ -32,27 +32,23 @@ const Cell = styled(MUITableCell)(createCellStyles);
 
 const TableCell = ({
   coords,
+  wasHit,
   isShipCell,
-  wasFieldRefreshed,
-  wasFieldRefreshedSet,
+  addHitCell,
+  deleteHitCell,
 }: TableCellProps) => {
-  const [wasHit, wasHitSet] = useState(false);
-
   const [cellIndex, rowIndex] = coords;
   const isFirstRow = rowIndex === 0;
   const isFirstCell = cellIndex === 0;
 
-  const toggleWasHit = () => wasHitSet((prevWasHit) => !prevWasHit);
+  const handler = wasHit ? deleteHitCell : addHitCell;
+  const onClickHandler = isShipCell ? () => handler(coords) : undefined;
+
   const stopEventPropagation = (event: MouseEvent<HTMLElement>) =>
     event.stopPropagation();
 
-  useEffect(() => {
-    wasHitSet(false);
-    wasFieldRefreshedSet(false);
-  }, [wasFieldRefreshed]);
-
   return (
-    <Cell isShipCell={isShipCell} wasHit={wasHit} onClick={toggleWasHit}>
+    <Cell isShipCell={isShipCell} wasHit={wasHit} onClick={onClickHandler}>
       {isFirstRow && (
         <HorisontalCoord onClick={stopEventPropagation}>
           {cellIndex + 1}
